@@ -18,7 +18,7 @@ const isServe = process.env.NODE_ENV === 'server'
 const APP = {
   name: 'formatify',
   host: '192.168.5.5',
-  port: 5000,
+  port: 5005,
 }
 
 const PATHS = {

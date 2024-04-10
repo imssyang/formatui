@@ -111,7 +111,7 @@ class u2panel {
                         } else {
                             let action = event.target
                             let url = `/formatify/${mode}/${action}`
-                            this.request(url)
+                            this.request(url, mode, event.target == 'expand' ? 2 : 0)
                         }
                         break
                 }
@@ -184,25 +184,28 @@ class u2panel {
             this.notify()
         }
     }
-    request(url) {
+    request(url, mode, indent) {
         let doc = this.editor.get('doc')
-        console.log('req', url, JSON.stringify(doc))
+        let contentType = 'text/plain'
+        console.log('req', url, contentType, doc)
         fetch(url, {
             method: 'POST',
-            body: JSON.stringify(doc),
+            body: doc,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': contentType
             }
         })
         .then(response => {
             if (response.ok) {
-                return response.json()
+                return response.text()
             } else {
                 throw new Error('HTTP status = ' + response.status)
             }
         })
         .then(data => {
-            console.log('rsp', url, data)
+            console.log('rsp', url, mode, indent, data)
+            this.editor.set({ doc: data })
+            this.notify()
         })
         .catch(error => {
             console.error(error)
