@@ -106,12 +106,11 @@ class u2panel {
                     case 'contract':
                     case 'expand':
                         let mode = this.toolbar.get('mode').selected
+                        let action = event.target
                         if (mode == 'json') {
-                            this.json(event.target == 'expand' ? 4 : 0)
+                            this.json(mode, action)
                         } else {
-                            let action = event.target
-                            let url = `/formatify/${mode}/${action}`
-                            this.request(url, mode, event.target == 'expand' ? 2 : 0)
+                            this.request(mode, action)
                         }
                         break
                 }
@@ -175,19 +174,23 @@ class u2panel {
         }
         return obj
     }
-    json(indent) {
+    json(mode, action) {
         let doc = this.editor.get('doc')
         let obj = this.parseDoc(doc)
         if (obj) {
+            let indent = action == 'expand' ? 4 : 0
             let data = JSON.stringify(obj, null, indent)
             this.editor.set({ doc: data })
             this.notify()
+        } else {
+            this.request(mode, action)
         }
     }
-    request(url, mode, indent) {
-        let doc = this.editor.get('doc')
+    request(mode, action) {
+        let url = `/formatify/${mode}/${action}`
         let contentType = 'text/plain'
-        console.log('req', url, contentType, doc)
+        let doc = this.editor.get('doc')
+        console.log('req', url, mode, doc)
         fetch(url, {
             method: 'POST',
             body: doc,
@@ -203,7 +206,7 @@ class u2panel {
             }
         })
         .then(data => {
-            console.log('rsp', url, mode, indent, data)
+            console.log('rsp', url, mode, data)
             this.editor.set({ doc: data })
             this.notify()
         })
