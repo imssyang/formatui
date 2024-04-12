@@ -1,6 +1,6 @@
-<h1 align="center">Formatify</h1>
+## Formatify
 
-## Overview
+<img align="center" width="1147px" src="https://github.com/imssyang/formatify/blob/main/snapshot/layout-3.png">
 
 Formatify is a text-formatted view used on browser. It aims to convert various text formats in place, such as json to python-dict.
 
