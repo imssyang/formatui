@@ -1,7 +1,7 @@
 {
   "name": "formatify",
   "version": "1.0.0",
-  "description": "self-host formatify!",
+  "description": "A text-formatted view used on browser.",
   "private": true,
   "type": "module",
   "scripts": {

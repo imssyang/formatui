@@ -39,6 +39,7 @@ Various texts in the development and debugging environment exist either in machi
 - Vertical multi-window layout
 - History list
 - Indent control
+- Clipboard
 
 ## License
 
