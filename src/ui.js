@@ -190,7 +190,6 @@ class u2panel {
         let url = `/formatify/${mode}/${action}`
         let contentType = 'text/plain'
         let doc = this.editor.get('doc')
-        console.log('req', url, mode, doc)
         fetch(url, {
             method: 'POST',
             body: doc,
@@ -206,7 +205,6 @@ class u2panel {
             }
         })
         .then(data => {
-            console.log('rsp', url, mode, data)
             this.editor.set({ doc: data })
             this.notify()
         })
