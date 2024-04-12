@@ -8,7 +8,8 @@
     "build": "NODE_ENV=production rollup -c",
     "build:dev": "NODE_ENV=development rollup -c",
     "serve": "NODE_ENV=server rollup -c -w",
-    "deploy": "NODE_ENV=deploy rollup -c"
+    "deploy": "NODE_ENV=deploy rollup -c",
+    "test": "echo TEST~"
   },
   "author": "imssyang <imssyang@gmail.com>",
   "license": "MIT",
