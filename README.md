@@ -1,8 +1,17 @@
-## Formatify
+<a href="https://github.com/imssyang/formatui">
+  <h1 align="center">
+    <picture>
+	  <img alt="Formatui" src="https://github.com/imssyang/formatui/blob/main/src/img/formatify.svg" width="100" />
+    </picture>
+    <p>Formatui</p>
+  </h1>
+</a>
 
-<img align="center" width="1147px" src="https://github.com/imssyang/formatify/blob/main/snapshot/layout-3.png">
+[![npm version](https://img.shields.io/npm/v/formatui.svg)](https://www.npmjs.com/package/formatui)
+[![license](https://img.shields.io/npm/l/formatui.svg)](https://github.com/imssyang/formatui/blob/main/LICENSE.md)
 
-Formatify is a text-formatted view used on browser. It aims to convert various text formats in place, such as json to python-dict.
+Formatui is a text-formatted view used on browser. It aims to convert various text formats in place, such as json to python-dict.
+<img align="center" width="1147px" src="https://github.com/imssyang/formatui/blob/main/snapshot/layout-3.png">
 
 ## Feature
 
@@ -40,7 +49,3 @@ Various texts in the development and debugging environment exist either in machi
 - History list
 - Indent control
 - Clipboard
-
-## License
-
-[Apache License 2.0](https://github.com/imssyang/formatify/blob/main/LICENSE)
