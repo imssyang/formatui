@@ -2,6 +2,12 @@ import JSON5 from 'json5'
 import { w2layout, w2toolbar, w2utils, query } from 'w2ui'
 import { CodeEditor } from './edit.js'
 
+class u2settings {
+    static url = {
+        prefix: null
+    }
+}
+
 class u2toolbar {
     constructor(ui) {
         this.ui = ui
@@ -187,7 +193,8 @@ class u2panel {
         }
     }
     request(mode, action) {
-        let url = `/formatify/${mode}/${action}`
+        let prefix = u2settings.url.prefix || ''
+        let url = `${prefix}/${mode}/${action}`
         let contentType = 'text/plain'
         let doc = this.editor.get('doc')
         fetch(url, {
@@ -329,4 +336,4 @@ class UI {
     }
 }
 
-export { UI }
+export { UI, u2settings as UISettings }

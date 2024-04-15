@@ -1,7 +1,7 @@
 <a href="https://github.com/imssyang/formatui">
   <h1 align="center">
     <picture>
-	  <img alt="Formatui" src="https://github.com/imssyang/formatui/blob/main/src/img/formatify.svg" width="100" />
+	  <img alt="Formatui" src="https://github.com/imssyang/formatui/blob/main/src/img/formatui.svg" width="100" />
     </picture>
     <p>Formatui</p>
   </h1>

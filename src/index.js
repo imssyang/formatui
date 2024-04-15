@@ -1,6 +1,16 @@
 import { version } from '../package.json';
-import { UI } from './ui.js'
+import { UI, UISettings } from './ui.js'
 import './css/ui.css'
 
-console.log('formatify version: ' + version);
-new UI()
+function setOptions(options) {
+    if (options?.url?.prefix)
+        UISettings.url.prefix = options.url.prefix
+}
+
+function InitUI(options) {
+    console.log('formatui version: ' + version);
+    setOptions(options)
+    new UI()
+}
+
+export { InitUI }

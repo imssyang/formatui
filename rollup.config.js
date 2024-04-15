@@ -11,13 +11,12 @@ import livereload from 'rollup-plugin-livereload'
 import postcss from 'rollup-plugin-postcss'
 import serve from 'rollup-plugin-serve'
 
-const isDeploy = process.env.NODE_ENV === 'deploy'
-const isProd = process.env.NODE_ENV === 'production' || isDeploy
+const isProd = process.env.NODE_ENV === 'production'
 const isServe = process.env.NODE_ENV === 'server'
 
 const APP = {
-  name: 'formatify',
-  host: '192.168.5.5',
+  name: 'formatui',
+  host: '0.0.0.0',
   port: 5015,
 }
 
@@ -25,13 +24,12 @@ const PATHS = {
   src: 'src',
   dist: 'dist',
   modules: 'node_modules',
-  public: path.join('..', '..', 'public'),
 }
 
 const FILES = {
   src: {
     img: [
-      { name: 'formatify.svg', to: 'img', when: [ 'serve', 'deploy' ] },
+      { name: 'formatui.svg', to: 'img', when: [ 'serve' ] },
     ],
     html: [
       { name: 'index.html', when: [ 'serve' ] },
@@ -60,15 +58,13 @@ const FILES = {
   },
   copySrc() {
     let items = []
-    const where = isDeploy ? PATHS.public : PATHS.dist
     for (const [dir, files] of Object.entries(this.src)) {
       for (const file of files) {
         const okServe = isServe && file.when.includes('serve')
-        const okDeploy = isDeploy && file.when.includes('deploy')
-        if (okServe || okDeploy) {
+        if (okServe) {
           const src = path.join(PATHS.src, dir, file.name)
           if (this.checkPath(src)) {
-            const dest = path.join(...[where, file?.to].filter(Boolean))
+            const dest = path.join(...[PATHS.dist, file?.to].filter(Boolean))
             items.push({ src: src, dest: dest })
           } else {
             throw new Error(`No valid src: ${src}`)
@@ -80,7 +76,6 @@ const FILES = {
   },
   copyModules() {
     let items = []
-    const where = isDeploy ? PATHS.public : PATHS.dist
     for (const [name, info] of Object.entries(this)) {
       if (typeof info !== 'function' && name !== 'src') {
         const realName = this.realName(name)
@@ -90,7 +85,7 @@ const FILES = {
             for (const tailing of tailings) {
               const src = path.join(...[PATHS.modules, realName, info?.dir, tailing].filter(Boolean))
               if (this.checkPath(src)) {
-                const dest = path.join(where, 'plugins', `${realName}@${info.ver}`)
+                const dest = path.join(PATHS.dist, 'plugins', `${realName}@${info.ver}`)
                 items.push({ src: src, dest: dest })
               } else {
                 throw new Error(`No valid src: ${src}`)
