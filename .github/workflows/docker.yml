@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE: ghcr.io/imssyang/formatui:${{ github.ref }}
+  IMAGE: ghcr.io/imssyang/formatui:${{ github.ref_name }}
   TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
