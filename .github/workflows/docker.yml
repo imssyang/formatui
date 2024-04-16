@@ -2,15 +2,13 @@ name: DockerCI
 
 on:
   push:
-    branches:
-      - 'main'
     tags:
-      - '*'
+      - 'v*'
 
 env:
   REGISTRY: ghcr.io
+  IMAGE: ghcr.io/imssyang/formatui:${{ github.ref }}
   TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  IMAGE: ghcr.io/imssyang/formatui:lastest
 
 permissions:
   contents: read
