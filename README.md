@@ -32,11 +32,14 @@ Formatui is a text-formatted view used on browser. It aims to convert various te
 For Node.js:
 
 ```bash
-# compile to a ES6 module
+# Compile to ES6 module
 npm run build[:dev]
 
-# run simple server (hot-reload), and open http://localhost:5015 in browser
+# Run simple server (hot-reload), and open http://localhost:5015 in browser
 npm run serve
+
+# Run by docker, and open http://localhost:5015 in browser
+docker run -it -p 5015:5015 --rm ghcr.io/imssyang/formatui:latest
 ```
 
 ## Why
