@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE: ghcr.io/imssyang/formatui:${{ github.ref_name }}
+  IMAGE: ghcr.io/${{ github.repository }}:${{ github.ref_name }}
   TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 permissions:
@@ -35,19 +35,27 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ env.TOKEN }}
 
-    - name: Build image - ${{ env.IMAGE }}
-      working-directory: .
-      shell: bash
-      run: |
-        docker build . --file Dockerfile --tag ${{ env.IMAGE }}
+    - name: Docker meta - ${{ env.REGISTRY }}/${{ github.repository }}
+      id: meta
+      uses: docker/metadata-action@v5
+      with:
+        images: |
+          ${{ env.REGISTRY }}/${{ github.repository }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{raw}}
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
 
-    - name: Push image - ${{ env.IMAGE }}
-      id: push
-      shell: bash
-      run: |
-        docker push ${{ env.IMAGE }} && \
-        echo "image=${{ env.IMAGE }}" >> $GITHUB_OUTPUT
+    - name: Build and push - ${{ env.IMAGE }}
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
 
-    - name: Metadata image - ${{ env.IMAGE }}
+    - name: Environment of image - ${{ env.IMAGE }}
       run: env
       shell: bash
