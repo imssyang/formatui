@@ -7,8 +7,8 @@
   </h1>
 </a>
 
-[![npm version](https://img.shields.io/npm/v/formatui.svg)](https://www.npmjs.com/package/formatui)
-[![license](https://img.shields.io/npm/l/formatui.svg)](https://github.com/imssyang/formatui/blob/main/LICENSE.md)
+[![npm version](https://img.shields.io/badge/node-%3E%3D18.0.0-blue)](https://www.npmjs.com/package/@imssyang/formatui)
+[![license](https://img.shields.io/badge/license-MIT-blue)](https://github.com/imssyang/formatui/blob/main/LICENSE)
 
 Formatui is a text-formatted view used on browser. It aims to convert various text formats in place, such as json to python-dict.
 <img align="center" width="1147px" src="https://github.com/imssyang/formatui/blob/main/snapshot/layout-3.png">
