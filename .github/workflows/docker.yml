@@ -1,4 +1,4 @@
-name: DockerCI
+name: docker-deploy
 
 on:
   push:
