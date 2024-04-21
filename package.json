@@ -1,6 +1,6 @@
 {
   "name": "@imssyang/formatui",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A text-formatted view used on browser.",
   "private": false,
   "type": "module",
@@ -9,6 +9,11 @@
     "build:dev": "NODE_ENV=development rollup -c",
     "serve": "NODE_ENV=server rollup -c -w",
     "test": "tree -h dist"
+  },
+  "homepage": "https://github.com/imssyang/formatui/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imssyang/formatui.git"
   },
   "author": "imssyang <imssyang@gmail.com>",
   "license": "MIT",
