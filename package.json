@@ -2,7 +2,7 @@
   "name": "formatui",
   "version": "1.0.0",
   "description": "A text-formatted view used on browser.",
-  "private": true,
+  "private": false,
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=production rollup -c",
