@@ -1,6 +1,6 @@
 {
   "name": "@imssyang/formatui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A text-formatted view used on browser.",
   "private": false,
   "type": "module",
