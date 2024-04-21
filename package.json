@@ -1,5 +1,5 @@
 {
-  "name": "formatui",
+  "name": "@imssyang/formatui",
   "version": "1.0.0",
   "description": "A text-formatted view used on browser.",
   "private": false,
