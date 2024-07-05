@@ -70,6 +70,7 @@ class u2panel {
         this.name = name
         this.id = { left: 1, main: 2, right: 3 }[name].toString()
         this.border = '1px solid gray'
+        this.escape_selected = false
         this.toolbar_meta = {
             style: this.style(true),
             items: [
@@ -97,6 +98,12 @@ class u2panel {
                 },
                 { type: 'radio', id: 'contract', group: '1', icon: 'bi bi-chevron-contract' },
                 { type: 'radio', id: 'expand', group: '1', icon: 'bi bi-chevron-expand' },
+                { type: 'menu-check', id: 'more', group: '1', icon: 'bi bi-three-dots',
+                    selected: [],
+                    items: [
+                        { id: 'escape', text: 'escape', icon: 'bi bi-escape' }
+                    ]
+                }
             ],
             onClick: (event) => {
                 switch (event.target) {
@@ -117,6 +124,18 @@ class u2panel {
                             this.json(mode, action)
                         } else {
                             this.request(mode, action)
+                        }
+                        break
+                }
+            },
+            onRefresh: (event) => {
+                switch (event.target) {
+                    case 'more':
+                        let more = this.toolbar.get('more').selected
+                        if (more.includes('escape')) {
+                            this.escape_selected = true
+                        } else {
+                            this.escape_selected = false
                         }
                         break
                 }
@@ -181,22 +200,29 @@ class u2panel {
         return obj
     }
     json(mode, action) {
-        let doc = this.editor.get('doc')
-        let obj = this.parseDoc(doc)
-        if (obj) {
-            let indent = action == 'expand' ? 4 : 0
-            let data = JSON.stringify(obj, null, indent)
-            this.editor.set({ doc: data })
-            this.notify()
-        } else {
+        if (this.escape_selected) {
             this.request(mode, action)
+        } else {
+            let doc = this.editor.get('doc')
+            let obj = this.parseDoc(doc)
+            if (obj) {
+                let indent = action == 'expand' ? 4 : 0
+                let data = JSON.stringify(obj, null, indent)
+                this.editor.set({ doc: data })
+                this.notify()
+            } else {
+                this.request(mode, action)
+            }
         }
     }
     request(mode, action) {
-        let prefix = u2settings.url.prefix || ''
-        let url = `${prefix}/${mode}/${action}`
-        let contentType = 'text/plain'
-        let doc = this.editor.get('doc')
+        const prefix = u2settings.url.prefix || ''
+        const params = new URLSearchParams({
+            escape: this.escape_selected
+        }).toString();
+        const url = `${prefix}/${mode}/${action}?${params}`
+        const contentType = 'text/plain'
+        const doc = this.editor.get('doc')
         fetch(url, {
             method: 'POST',
             body: doc,
