@@ -204,14 +204,18 @@ class u2panel {
             this.request(mode, action)
         } else {
             let doc = this.editor.get('doc')
-            let obj = this.parseDoc(doc)
-            if (obj) {
-                let indent = action == 'expand' ? 4 : 0
-                let data = JSON.stringify(obj, null, indent)
-                this.editor.set({ doc: data })
-                this.notify()
-            } else {
+            if (/\\"/.test(doc)) {
                 this.request(mode, action)
+            } else {
+                let obj = this.parseDoc(doc)
+                if (obj) {
+                    let indent = action == 'expand' ? 4 : 0
+                    let data = JSON.stringify(obj, null, indent)
+                    this.editor.set({ doc: data })
+                    this.notify()
+                } else {
+                    this.request(mode, action)
+                }
             }
         }
     }
