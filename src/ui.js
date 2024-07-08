@@ -128,7 +128,7 @@ class u2panel {
         return this.layout.x.get(this.name).toolbar
     }
     get height() {
-        return this.layout.height - this.layout.ui.toolbar.height - 2
+        return this.layout.height - this.layout.ui.toolbar.height - 3
     }
     render() {
         this.editor = new CodeEditor(this.name, this.height)
