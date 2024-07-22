@@ -37,22 +37,34 @@ body {
 #w2overlay-x2toolbar-drop .menu-extra {
   display: none;
 }
-#w2overlay-x2layout_left_toolbar-drop .menu-icon {
-  width: 20px;
-}
-#w2overlay-x2layout_left_toolbar-drop .menu-extra {
-  display: none;
-}
 #w2overlay-x2layout_main_toolbar-drop .menu-icon {
   width: 20px;
 }
 #w2overlay-x2layout_main_toolbar-drop .menu-extra {
   display: none;
 }
+#w2overlay-x2layout_left_toolbar-drop .menu-icon {
+  width: 20px;
+}
+#w2overlay-x2layout_left_toolbar-drop .menu-extra {
+  display: none;
+}
 #w2overlay-x2layout_right_toolbar-drop .menu-icon {
   width: 20px;
 }
 #w2overlay-x2layout_right_toolbar-drop .menu-extra {
+  display: none;
+}
+#w2overlay-x2layout_top_toolbar-drop .menu-icon {
+  width: 20px;
+}
+#w2overlay-x2layout_top_toolbar-drop .menu-extra {
+  display: none;
+}
+#w2overlay-x2layout_bottom_toolbar-drop .menu-icon {
+  width: 20px;
+}
+#w2overlay-x2layout_bottom_toolbar-drop .menu-extra {
   display: none;
 }
 

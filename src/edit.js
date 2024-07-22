@@ -112,7 +112,7 @@ class EditorTheme {
                 height: `${height}px`,
             },
             ".cm-content, .cm-gutter": {
-                minHeight: "200px",
+                minHeight: "20px",
             },
             ".cm-editor": {
                 border: "none",

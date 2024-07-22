@@ -22,10 +22,11 @@ Formatui is a text-formatted view used on browser. It aims to convert various te
 
 ## Dependencies
 
-* [W2UI](https://github.com/vitmalina/w2ui): a modern JavaScript UI library for building rich web applications.
-* [codemirror6](https://codemirror.net/): a code editor component for the web.
+* [W2UI](https://github.com/vitmalina/w2ui): A modern JavaScript UI library for building rich web applications.
+* [codemirror6](https://codemirror.net/): A code editor component for the web.
 * [bootstrap-icons](https://icons.getbootstrap.com/): Free, high quality, open source icon library with over 2,000 icons.
-* [json5](https://json5.org/): an extension to the popular JSON file format that aims to be easier to write and maintain by hand.
+* [json5](https://json5.org/): An extension to the popular JSON file format that aims to be easier to write and maintain by hand.
+* [clipboard](https://clipboardjs.com): A modern approach to copy text to clipboard.
 
 ### Commands
 
