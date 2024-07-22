@@ -36,25 +36,27 @@ const FILES = {
     ]
   },
   bootstrapIcons: {
-    ver: '1.11.2',
     dir: 'font',
     css: isProd ? 'bootstrap-icons.min.css' : 'bootstrap-icons.css',
     extras: [ 'fonts' ],
   },
+  clipboard: {
+    dir: 'dist',
+    js: isProd ? 'clipboard.min.js' : 'clipboard.js',
+  },
   json5: {
-    ver: '2.2.3',
     dir: 'dist',
     js: isProd ? 'index.min.mjs' : 'index.mjs',
   },
   w2ui: {
-    ver: '2.0.0',
     js: isProd ? 'w2ui-2.0.es6.min.js' : 'w2ui-2.0.es6.js',
     css: isProd ? 'w2ui-2.0.min.css' : 'w2ui-2.0.css',
   },
   url(name) {
     const info = this[name]
     const realName = this.realName(name)
-    return `/plugins/${realName}@${info.ver}/${info.js}`
+    const realVersion = this.realVersion(name)
+    return `/plugins/${realName}@${realVersion}/${info.js}`
   },
   copySrc() {
     let items = []
@@ -79,13 +81,14 @@ const FILES = {
     for (const [name, info] of Object.entries(this)) {
       if (typeof info !== 'function' && name !== 'src') {
         const realName = this.realName(name)
+        const realVersion = this.realVersion(name)
         for (const tail of [info?.js, info?.css, info?.extras]) {
           if (tail) {
             const tailings = typeof tail == 'string' ? [ tail ] : tail
             for (const tailing of tailings) {
               const src = path.join(...[PATHS.modules, realName, info?.dir, tailing].filter(Boolean))
               if (this.checkPath(src)) {
-                const dest = path.join(PATHS.dist, 'plugins', `${realName}@${info.ver}`)
+                const dest = path.join(PATHS.dist, 'plugins', `${realName}@${realVersion}`)
                 items.push({ src: src, dest: dest })
               } else {
                 throw new Error(`No valid src: ${src}`)
@@ -96,6 +99,12 @@ const FILES = {
       }
     }
     return items
+  },
+  realVersion(name) {
+    const realName = this.realName(name)
+    const pkgPath = path.join(PATHS.modules, realName, 'package.json')
+    const pkg = JSON.parse(fs.readFileSync(new URL(pkgPath, import.meta.url), 'utf8'))
+    return pkg.version
   },
   realName(name) {
     if (this.checkName(name)) { return name }
@@ -124,10 +133,11 @@ export default {
     file: path.join(PATHS.dist, isProd ? 'index.min.js' : 'index.js'),
     format: 'es',
     sourcemap: isProd ? false : true,
-		paths: {
-			json5: FILES.url('json5'),
+    paths: {
+      clipboard: FILES.url('clipboard'),
+      json5: FILES.url('json5'),
       w2ui: FILES.url('w2ui'),
-		}
+    }
   },
   external: [
     'json5',

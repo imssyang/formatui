@@ -190,6 +190,28 @@ class u2panel {
                             this.request(mode, action)
                         }
                         break
+                    case 'copy':
+                        let doc = this.editor.get('doc')
+                        if (doc) {
+                            if (ClipboardJS.isSupported('copy')) {
+                                const copyId = `#tb_${this.layout.x.name}_${this.name}_toolbar_item_${event.target}`
+                                let clipboard = new ClipboardJS(copyId, {
+                                    text: () => { return doc }
+                                })
+                                clipboard.on('success', (clipEvent) => {
+                                    console.debug("Clipboard:", clipEvent.action, clipEvent.text)
+                                    clipEvent.clearSelection()
+                                    clipboard.destroy()
+                                })
+                                clipboard.on('error', function(clipEvent) {
+                                    console.error("Clipboard:", clipEvent.action, clipEvent.trigger)
+                                    clipboard.destroy()
+                                })
+                            } else {
+                                this.notify(`Unsupport function at ${this.name}:${event.target}`, 1_000, true)
+                            }
+                        }
+                        break
                 }
             },
             onRefresh: (event) => {
@@ -221,11 +243,11 @@ class u2panel {
         this.layout.x.html(this.name, this.editor.get('html'))
         this.editor.render()
     }
-    notify(text, error) {
+    notify(text, timeout, error) {
         if (text) {
             w2utils.notify(text, {
                 class: 'u2notify',
-                timeout: 30_000,
+                timeout: timeout ?? 30_000,
                 error: error ? true : false,
             })
         } else {
