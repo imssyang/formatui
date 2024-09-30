@@ -1,11 +1,47 @@
 import JSON5 from 'json5'
-import { w2layout, w2toolbar, w2utils, query } from 'w2ui'
+import { w2layout, w2popup, w2toolbar, w2utils, query } from 'w2ui'
 import { CodeEditor } from './edit.js'
 
 class u2settings {
     static url = {
         prefix: null
     }
+}
+
+function popup2() {
+    w2popup.open({
+        title: 'Popup Title',
+        text: 'This is text inside the popup',
+        actions: ['Ok', 'Cancel'],
+        width: 500,
+        height: 300,
+        modal: true,
+        showClose: true,
+        showMax: true,
+        onMax(evt) {
+            console.log('max', evt)
+        },
+        onMin(evt) {
+            console.log('min', evt)
+        },
+        onKeydown(evt) {
+            console.log('keydown', evt)
+        }
+    })
+    .then((evt) => {
+        console.log('popup ready')
+    })
+    .close(evt => {
+        console.log('popup clsoed')
+    })
+    .ok((evt) => {
+        console.log('ok', evt)
+        w2popup.close()
+    })
+    .cancel((evt) => {
+        console.log('cancel', evt)
+        w2popup.close()
+    })
 }
 
 class u2toolbar {
@@ -40,6 +76,26 @@ class u2toolbar {
                         { id: '4', text: ' ', icon: 'bi bi-layout-three-columns', style: 'transform: rotate(90deg)' },
                     ]
                 },
+                { type: 'break' },
+                { type: 'menu', id: 'session_menu', text: ' ', icon: 'bi bi-card-list',
+                    items: [
+                        { id: 'new', text: ' ', icon: 'bi bi-plus-circle' },
+                        { id: 'delete', text: ' ', icon: 'bi bi-x-circle' },
+                        { id: 'update', text: ' ', icon: 'bi bi-arrow-repeat' },
+                    ]
+                },
+                { type: 'menu', id: 'session_items',
+                    text: (item) => {
+                        return item.get(item.selected)?.text
+                    },
+                    selected: 'id3',
+                    items: [
+                        { id: 'id1', text: 'Item 1' },
+                        { id: 'id2', text: 'Item 2' },
+                        { id: 'id3', text: 'Item 333333333333333 2342' },
+                    ]
+                },
+                { type: 'button', id: 'item3', text: ' ', icon: 'bi bi-chevron-right' },
                 { type: 'break' },
                 { type: 'spacer' },
             ],
@@ -109,6 +165,9 @@ class u2toolbar {
                 this.ui.layout.show('bottom', '33%', layoutId, true)
                 this.ui.layout.hide('left')
                 this.ui.layout.hide('right')
+                break
+            case 'session_new':
+                popup2()
                 break
         }
         if (layoutId) {
