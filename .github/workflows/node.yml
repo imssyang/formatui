@@ -21,7 +21,6 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v5
-        run: rm -rf pnpm-lock.yaml node_modules
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: https://registry.npmjs.org/
@@ -31,6 +30,7 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install dependencies
+        run: rm -rf pnpm-lock.yaml node_modules
         run: pnpm install
 
       - name: Build
