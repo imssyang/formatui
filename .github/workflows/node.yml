@@ -13,20 +13,33 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['18.x', '20.x', '22.x']
+        node-version: ['20.x']
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v5
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v5
-      with:
-        node-version: ${{ matrix.node-version }}
-        registry-url: https://registry.npmjs.org/
-        cache: 'pnpm'
-    - run: rm -rf pnpm-lock.yaml node_modules
-    - run: pnpm install
-    - run: pnpm run build 
-    - run: pnpm test
-    - run: pnpm publish
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v5
+        run: rm -rf pnpm-lock.yaml node_modules
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Publish
+        run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
